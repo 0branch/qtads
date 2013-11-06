@@ -17,6 +17,8 @@
 #include <QDebug>
 #include <QMetaType>
 #include <QFileDialog>
+#include <QFont>
+#include <QString>
 
 #include "settings.h"
 #include "sysframe.h"
@@ -47,6 +49,13 @@
 
 int main( int argc, char** argv )
 {
+#ifdef Q_OS_MACX
+    if ( QSysInfo::MacintoshVersion > QSysInfo::MV_10_8 ) {
+        QFont::insertSubstitution(QString::fromUtf8(".Lucida Grande UI"),
+                                  QString::fromUtf8("Lucida Grande"));
+    }
+#endif
+
     CHtmlResType::add_basic_types();
     CHtmlSysFrameQt* app = new CHtmlSysFrameQt(argc, argv, "QTads", "2.0", "Nikos Chantziaras",
                                                "qtads.sourceforge.net");
